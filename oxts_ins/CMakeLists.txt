@@ -12,19 +12,11 @@ endif()
 
 
 # find dependencies
-find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(sensor_msgs REQUIRED)
-find_package(geometry_msgs REQUIRED)
-find_package(nav_msgs REQUIRED)
-find_package(tf2 REQUIRED)
-find_package(tf2_ros REQUIRED)
-find_package(tf2_kdl REQUIRED)
-find_package(oxts_msgs REQUIRED)
+find_package(ament_cmake_auto REQUIRED)
 
+ament_auto_find_build_dependencies()
 
-add_executable(oxts_ins 
+ament_auto_add_executable(oxts_ins 
                src/conversions/convert.cpp 
                src/conversions/convert_node.cpp
                src/conversions/wrapper.cpp
@@ -32,37 +24,19 @@ add_executable(oxts_ins
                src/lib/nav_conversions.cpp
 )
 
-ament_target_dependencies(oxts_ins 
-                          rclcpp
-                          std_msgs
-                          sensor_msgs
-                          geometry_msgs
-                          nav_msgs
-                          tf2
-                          tf2_kdl
-                          oxts_msgs)
-target_include_directories(oxts_ins PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  PRIVATE ${Boost_INCLUDE_DIRS}
-  $<INSTALL_INTERFACE:include>)
 
-
-install(TARGETS oxts_ins
-        DESTINATION lib/${PROJECT_NAME})
-
-install(DIRECTORY 
+ament_auto_package(
+        INSTALL_TO_SHARE
         config urdf rviz
-        DESTINATION share/${PROJECT_NAME})
+        )
 
-if(BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # uncomment the line when a copyright and license is not present in all source files
-  #set(ament_cmake_copyright_FOUND TRUE)
-  # the following line skips cpplint (only works in a git repo)
-  # uncomment the line when this package is not in a git repo
-  #set(ament_cmake_cpplint_FOUND TRUE)
-  ament_lint_auto_find_test_dependencies()
+set(ROS_DISTRO $ENV{ROS_DISTRO})
+if(${ROS_DISTRO} STREQUAL "rolling")
+    add_compile_definitions(ROS_DISTRO_ROLLING)
+elseif(${ROS_DISTRO} STREQUAL "foxy")
+    add_compile_definitions(ROS_DISTRO_FOXY)
+elseif(${ROS_DISTRO} STREQUAL "galactic")
+    add_compile_definitions(ROS_DISTRO_GALACTIC)
+elseif(${ROS_DISTRO} STREQUAL "humble")
+    add_compile_definitions(ROS_DISTRO_HUMBLE)
 endif()
-
-ament_package()
