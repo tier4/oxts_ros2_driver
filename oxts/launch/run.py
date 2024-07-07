@@ -106,6 +106,10 @@ def generate_launch_description():
             {"topic_prefix": topic_prefix},
             {"frame_id": frame_id},
             {"lrf_source": lrf_source},
+            {"pub_tf_flag": False},
+            {"pub_odometry_rate": 50},
+            {"pub_nav_sat_fix_rate": 10},
+            {"pub_velocity_rate": 50},
         ],
     )
 
