@@ -10,7 +10,7 @@ oxts_driver:
     # ncom: /default/ncom/path.ncom 
     ## Topic to publish NCOM messages to
     ncom_topic: "ncom"
-    topic_prefix: "ins"
+    topic_prefix: ""
 
 #===============================================================================
     ## Rate is in Hz. 0 Hz => Message will not be published
