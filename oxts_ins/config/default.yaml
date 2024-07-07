@@ -16,16 +16,16 @@ oxts_ins:
     pub_string_rate         : 0
     string_topic            : "debug_string_pos"
     ### Publish NavSatFix message
-    pub_nav_sat_fix_rate    : 4
+    pub_nav_sat_fix_rate    : 10
     nav_sat_fix_topic       : "nav_sat_fix"
     ### Publish Velocity message
-    pub_velocity_rate       : 0
+    pub_velocity_rate       : 50
     velocity_topic          : "velocity"
     ### Publish Odometry message
-    pub_odometry_rate       : 100
+    pub_odometry_rate       : 50
     odometry_topic          : "odometry"
     ### Publish Path message
-    pub_path_rate           : 100
+    pub_path_rate           : 50
     path_topic              : "path"
     ### Defaults to "map", can be set to "odom" when emulating navsat_transform_node
     pub_odometry_frame_id   : "map"
@@ -48,7 +48,7 @@ oxts_ins:
     pub_imu_flag            : true
     imu_topic               : "imu"
     ### Broadcast TF messages for rviz visualisation
-    pub_tf_flag             : true
+    pub_tf_flag             : false
     ### Source of the local reference frame
     #### 0 - NCom LRF
     #### 1 - Set automatically from first NCom packet
