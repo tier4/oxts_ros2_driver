@@ -52,8 +52,6 @@ struct Fixture {
     ins = std::make_shared<OxtsIns>(insOptions);
     std::thread{[]() { rclcpp::spin(ins); }}.detach();
 
-    topicPrefix =
-        driver->get_parameter("topic_prefix").get_value<std::string>();
   }
 
   ~Fixture() {

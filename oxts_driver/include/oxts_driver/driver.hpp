@@ -67,8 +67,6 @@ private:
   uint32_t ncom_rate;
   /*! The topic to publish the raw NCOM messages to */
   std::string ncom_topic;
-  /*! The string to prefix the ncom topic with */
-  std::string topic_prefix;
   /*! IP address of the INS to connect to */
   std::string unit_ip;
   /*! Endpoint Port of the INS to be connected to. Default 3000 for NCom. */
@@ -121,7 +119,6 @@ public:
     // Initialise configurable parameters (all params should have defaults)
     ncom_rate = this->declare_parameter("ncom_rate", 100);
     ncom_topic = this->declare_parameter("ncom_topic", "ncom");
-    topic_prefix = this->declare_parameter("topic_prefix", "ins");
     unit_ip = this->declare_parameter("unit_ip", "0.0.0.0");
     unit_port = this->declare_parameter("unit_port", 3000);
     ncom_path = this->declare_parameter("ncom", std::string(""));
@@ -134,7 +131,7 @@ public:
     // Initialise publishers for each message - all are initialised, even if not
     // configured
     pubNCom_ = this->create_publisher<oxts_msgs::msg::Ncom>(
-        topic_prefix + "/" + ncom_topic, 10);
+        ncom_topic, 10);
 
     nrx = NComCreateNComRxC();
 
@@ -170,8 +167,13 @@ public:
 
     // Wait for config to be populated in NCOM packets
     RCLCPP_INFO(this->get_logger(), "Waiting for INS config information...");
+    std::cout << "Serial Number: " << nrx->mSerialNumber << std::endl;
+    std::cout << "Heading Valid: " << nrx->mIsImu2VehHeadingValid << std::endl;
     while (nrx->mSerialNumber == 0 || nrx->mIsImu2VehHeadingValid == 0) {
       (*this.*update_ncom)();
+      std::cout << "Waiting for INS config information..." << std::endl;
+      std::cout << "Serial Number: " << nrx->mSerialNumber << std::endl;
+      std::cout << "Heading Valid: " << nrx->mIsImu2VehHeadingValid << std::endl;
     }
     RCLCPP_INFO(this->get_logger(), "INS config information received");
 

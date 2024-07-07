@@ -7,7 +7,7 @@ oxts_ins:
     ## Configure individual topics
     ## Rates must be factors of the ncom_rate, configured above.
     ## Rates are in Hz. 0 Hz => Message will not be published
-    ### Overall topic names take the form "{topic_prefix}/{x_topic}"
+    ### Overall topic names take the form "~/{x_topic}"
     ### where topic prefix is defined in the oxts_driver yaml
     ### Configure NCom (do not exceed output rate of ncom)
     ncom_rate               : 100

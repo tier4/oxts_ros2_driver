@@ -122,7 +122,6 @@ private:
   uint8_t pubLeverArmInterval;
   uint8_t pubIMUBiasInterval;
 
-  std::string topic_prefix;
   std::string ncom_topic;
   std::string string_topic;
   std::string nav_sat_fix_topic;
@@ -230,7 +229,6 @@ public:
     lrf_source = this->declare_parameter("lrf_source", 0);
     pub_lever_arm_rate = this->declare_parameter("pub_lever_arm_rate", 0);
     pub_imu_bias_rate = this->declare_parameter("pub_imu_bias_rate", 0);
-    topic_prefix = this->declare_parameter("topic_prefix", "ins");
     ncom_topic = this->declare_parameter("ncom_topic", "ncom");
     string_topic = this->declare_parameter("string_topic", "debug_string_pos");
     nav_sat_fix_topic =
@@ -283,7 +281,7 @@ public:
     // Initialise publishers for each message if configured to publish
     if (pub_imu_flag)
       pubImu_ = this->create_publisher<sensor_msgs::msg::Imu>(
-          topic_prefix + "/" + imu_topic, 10);
+          imu_topic, 10);
 
     if (pubStringInterval) {
       // Throw an error if ncom_rate / String_rate is not an integer
@@ -294,7 +292,7 @@ public:
       }
       // Create publisher
       pubString_ = this->create_publisher<std_msgs::msg::String>(
-          topic_prefix + "/" + string_topic, 10);
+          string_topic, 10);
     }
     if (pubNavSatFixInterval) {
       // Throw an error if ncom_rate / NavSatFix_rate is not an integer
@@ -305,7 +303,7 @@ public:
       }
       // Create publisher
       pubNavSatFix_ = this->create_publisher<sensor_msgs::msg::NavSatFix>(
-          topic_prefix + "/" + nav_sat_fix_topic, 10);
+          nav_sat_fix_topic, 10);
     }
     if (pubVelocityInterval) {
       // Throw an error if ncom_rate / Velocity_rate is not an integer
@@ -316,7 +314,7 @@ public:
       }
       // Create publisher
       pubVelocity_ = this->create_publisher<geometry_msgs::msg::TwistStamped>(
-          topic_prefix + "/" + velocity_topic, 10);
+          velocity_topic, 10);
     }
     if (pubOdometryInterval) {
       // Throw an error if ncom_rate / Odometry_rate is not an integer
@@ -327,7 +325,7 @@ public:
       }
       // Create publisher
       pubOdometry_ = this->create_publisher<nav_msgs::msg::Odometry>(
-          topic_prefix + "/" + odometry_topic, 10);
+          odometry_topic, 10);
     }
     if (pubPathInterval) {
       // Throw an error if ncom_rate / Path_rate is not an integer
@@ -338,7 +336,7 @@ public:
       }
       // Create publisher
       pubPath_ = this->create_publisher<nav_msgs::msg::Path>(
-          topic_prefix + "/" + path_topic, 10);
+          path_topic, 10);
     }
     if (pubTimeReferenceInterval) {
       // Throw an error if ncom_rate / TimeReference_rate is not an integer
@@ -350,7 +348,7 @@ public:
       // Create publisher
       pubTimeReference_ =
           this->create_publisher<sensor_msgs::msg::TimeReference>(
-              topic_prefix + "/" + time_reference_topic, 10);
+              time_reference_topic, 10);
     }
     if (pubEcefPosInterval) {
       // Throw an error if ncom_rate / EcefPos_rate is not an integer
@@ -361,7 +359,7 @@ public:
       }
       // Create publisher
       pubEcefPos_ = this->create_publisher<geometry_msgs::msg::PointStamped>(
-          topic_prefix + "/" + ecef_pos_topic, 10);
+          ecef_pos_topic, 10);
     }
     if (pubNavSatRefInterval) {
       // Throw an error if ncom_rate / NavSatRef_rate is not an integer
@@ -372,7 +370,7 @@ public:
       }
       // Create publisher
       pubNavSatRef_ = this->create_publisher<oxts_msgs::msg::NavSatRef>(
-          topic_prefix + "/" + nav_sat_ref_topic, 10);
+          nav_sat_ref_topic, 10);
     }
     if (pubLeverArmInterval) {
       // Throw an error if ncom_rate / LeverArm_rate is not an integer
@@ -383,7 +381,7 @@ public:
       }
       // Create publisher
       pubLeverArm_ = this->create_publisher<oxts_msgs::msg::LeverArm>(
-          topic_prefix + "/" + lever_arm_topic, 10);
+          lever_arm_topic, 10);
     }
     if (pubIMUBiasInterval) {
       // Throw an error if ncom_rate / LeverArm_rate is not an integer
@@ -394,12 +392,12 @@ public:
       }
       // Create publisher
       pubIMUBias_ = this->create_publisher<oxts_msgs::msg::ImuBias>(
-          topic_prefix + "/" + imu_bias_topic, 10);
+          imu_bias_topic, 10);
     }
 
     // Initialise subscriber for regular ncom packet message
     subNCom_ = this->create_subscription<oxts_msgs::msg::Ncom>(
-        topic_prefix + "/" + ncom_topic, 10,
+        ncom_topic, 10,
         std::bind(&OxtsIns::ncomCallbackRegular, this, _1));
 
     nrx = NComCreateNComRxC();

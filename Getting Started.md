@@ -112,13 +112,12 @@ ros2 launch oxts run.py
 The driver also accepts some options at the command-line:
 
 - **`ncom`** - The path to an NCOM file to read, and publish data from. If this isn't given, NCOM data is read from a live device instead.
-- **`topic_prefix`** - Prefix for every topic name; defaults to `ins`. E.g.  changing this to `my_ins` would produce topics such as `/my_ins/velocity`.
 - **`wait_for_init`** - Whether to wait for NCOM initialisation before publishing messages, or start publishing them immediately. Expects a value of `True`/`False`; defaults to `True`.
 
 To supply options:
 
 ```bash
-ros2 launch oxts run.py ncom:=/path/to/ncom/file.ncom topic_prefix:=my_prefix wait_for_init:=False
+ros2 launch oxts run.py ncom:=/path/to/ncom/file.ncom
 ```
 
 You don't need to supply any of these; they all have default values.

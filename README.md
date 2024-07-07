@@ -58,7 +58,7 @@ The currently available launch files are as follows:
 You can also override options from the configuration file at the command-line, e.g.:
 
 ```bash
-ros2 launch oxts run.py topic_prefix:=myprefix
+ros2 launch oxts run.py
 ```
 
 **Be aware that currently, this only works for some options.**

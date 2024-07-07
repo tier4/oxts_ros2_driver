@@ -21,7 +21,6 @@ def load_params(context):
     use_sim_time = driver_params.pop("use_sim_time", False)
     wait_for_init = driver_params.pop("wait_for_init", False)
     print(f"wait_for_init: {wait_for_init}")
-    topic_prefix = driver_params.pop("topic_prefix", "")
     ncom_file = driver_params.pop("ncom_file", "")
     unit_ip = driver_params.pop("unit_ip","0.0.0.0")
     unit_port = driver_params.pop("unit_port", 3000)
@@ -41,7 +40,6 @@ def load_params(context):
             driver_params,
             {"use_sim_time": use_sim_time},
             {"wait_for_init": wait_for_init},
-            {"topic_prefix": topic_prefix},
             {"ncom": ncom_file},
             {"unit_ip": unit_ip},
             {"unit_port": unit_port},
@@ -58,7 +56,6 @@ def load_params(context):
         parameters=[
             ins_params,
             {"use_sim_time": use_sim_time},
-            {"topic_prefix": topic_prefix},
             {"frame_id": frame_id},
             {"lrf_source": lrf_source},
         ],
