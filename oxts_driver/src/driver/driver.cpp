@@ -80,10 +80,14 @@ bool OxtsDriver::checkRate(double prevPktSec, double currPktSec) {
   else if (currPktSec - prevPktSec > (1.5 / this->ncom_rate)) {
     RCLCPP_WARN(this->get_logger(), "Packet drop detected.");
   } else if (currPktSec < prevPktSec) {
-    RCLCPP_ERROR(
-        this->get_logger(),
-        "Current packet is older than previous packet, skipping packet.");
-    skip_packet = true;
+    if (currPktSec - prevPktSec < -0.5) {
+      RCLCPP_WARN(this->get_logger(), "Time jump detected. Resetting time.");
+    } else {
+      RCLCPP_ERROR(
+          this->get_logger(),
+          "Current packet is older than previous packet, skipping packet.");
+      skip_packet = true;
+    }
   } else if (currPktSec == prevPktSec) {
     RCLCPP_ERROR(this->get_logger(),
                  "Duplicate NCOM packet detected, skipping packet.");
